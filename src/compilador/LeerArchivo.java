@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 public class LeerArchivo {
     ArrayList<String> lineas = new ArrayList<>();
     
+    //funcion recibe argumento tipo File para leer el .txt
+    //retorna un array con las lineas leidas
     public ArrayList redFile() throws IOException{
         File file = new File("C:\\proyecto_compiladores\\codigo.txt");
         BufferedReader br = null; 
@@ -20,7 +22,10 @@ public class LeerArchivo {
             String st; 
             while ((st = br.readLine()) != null) 
                 if(st.contains(";")){
-                    lineas.add(st);
+                    String linea = st.replace(";", "");
+                    if (linea != "" || linea !=" " || linea !="\n"){
+                        lineas.add(linea);
+                    }
                 }else{
                     System.out.println("Error en: "+st+" <<: sentencia no finaliza con ';'");
                     break;
