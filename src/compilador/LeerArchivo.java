@@ -13,9 +13,10 @@ public class LeerArchivo {
     ArrayList<String> lineas = new ArrayList<>();
     
     //funcion recibe argumento tipo File para leer el .txt
-    //retorna un array con las lineas leidas
-    public ArrayList redFile() throws IOException{
-        File file = new File("C:\\proyecto_compiladores\\codigo.txt");
+    //valida que todas las lineas finalicen con ;
+    //retorna un array con las lineas leidas sin el ;
+    public ArrayList redFile(File file) throws IOException{
+        
         BufferedReader br = null; 
         try {
             br = new BufferedReader(new FileReader(file));
