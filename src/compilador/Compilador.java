@@ -15,13 +15,13 @@ public class Compilador {
         LeerArchivo rf = new LeerArchivo();
         try {
             lineas = rf.redFile();
+            for (String linea : lineas){
+                System.out.println(linea);
+            }
         } catch (IOException ex) {
             ex.toString();
         }
-        
-        for (String linea : lineas){
-            System.out.println(linea);
-        }
+  
     }
     
 }
