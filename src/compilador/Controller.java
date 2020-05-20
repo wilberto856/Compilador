@@ -5,37 +5,62 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
-     ArrayList<String> lineas =  new ArrayList<>();
-     ArrayList<Declaracion> dec =  new ArrayList<>();
-     
-    
-    public void obtenerDatos(File file){
+
+    ArrayList<String> lineas = new ArrayList<>();
+    ArrayList<Declaracion> dec = new ArrayList<>();
+
+
+    public void obtenerDatos(File file) {
         LeerArchivo rf = new LeerArchivo();
         try {
             //obtener las lineas del archivo
             lineas = rf.redFile(file);
-            for (String linea : lineas){
-                System.out.println(linea);
-            }
         } catch (IOException ex) {
             ex.toString();
         }
     }
-    
-    public void declaraciones(){
-        for (String linea : lineas){
+
+    public void declaraciones() {
+        for (String linea : lineas) {
+            Declaracion decl = new Declaracion();
             String[] tokens = tokens(linea);
-            for(String token : tokens){
-                if (token != "" || token !=" ")
-                    System.out.println("token: "+ token);
-            }
-            System.out.println("----");
+//            System.out.println(tokens[0]+" "+tokens[1]+" "+tokens[2]);
+            
+                decl.setNombreVariable(tokens[0]);
+                decl.setTipoVariable(tokens[1]);
+                decl.setValorVariable(tokens[2]);
+            
+            dec.add(decl);
+        }
+
+        for(Declaracion nuev: dec){
+            System.out.println("| "+nuev.getNombreVariable()+" | "+nuev.getTipoVariable()+" | "+nuev.getValorVariable());
         }
     }
-    
-    public String[] tokens(String linea){
-        String [] tokens;
-        tokens = linea.split(" ");
+
+    public String[] tokens(String linea) {
+        String[] tokens = new String[3];
+        String[] preToken = null;
+
+        if (linea.contains("=")) {
+            //Variable con Asignacion
+            preToken = linea.split("=");
+            String[] st = preToken[0].split(" ");
+            tokens[0] = st[0];
+            if (st.length == 3) {
+                tokens[1] = st[2]; 
+                tokens[2] = preToken[1].replace("'", "");
+            }else if(st.length==1){
+                tokens[2] = preToken[1];
+            }
+            
+        } else {
+            //Variable sin asignacion
+            String[] st = linea.split(" ");
+            tokens[0] = st[0];
+            tokens[1] = st[2]; 
+        }
+
         return tokens;
     }
 }
