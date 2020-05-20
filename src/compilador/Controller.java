@@ -19,25 +19,7 @@ public class Controller {
             ex.toString();
         }
     }
-
-    public void declaraciones() {
-        for (String linea : lineas) {
-            Declaracion decl = new Declaracion();
-            String[] tokens = tokens(linea);
-//            System.out.println(tokens[0]+" "+tokens[1]+" "+tokens[2]);
-            
-                decl.setNombreVariable(tokens[0]);
-                decl.setTipoVariable(tokens[1]);
-                decl.setValorVariable(tokens[2]);
-            
-            dec.add(decl);
-        }
-
-        for(Declaracion nuev: dec){
-            System.out.println("| "+nuev.getNombreVariable()+" | "+nuev.getTipoVariable()+" | "+nuev.getValorVariable());
-        }
-    }
-
+    
     public String[] tokens(String linea) {
         String[] tokens = new String[3];
         String[] preToken = null;
@@ -62,5 +44,56 @@ public class Controller {
         }
 
         return tokens;
+    }
+
+    public void declaraciones() {
+        for (String linea : lineas) {
+            Declaracion decl = new Declaracion();
+            String[] tokens = tokens(linea);
+//            System.out.println(tokens[0]+" "+tokens[1]+" "+tokens[2]);
+            
+                decl.setNombreVariable(tokens[0]);
+                decl.setTipoVariable(tokens[1]);
+                decl.setValorVariable(tokens[2]);
+            
+            dec.add(decl);
+        }
+
+    }
+
+    public void validarTipos(){
+        
+        System.out.println("validanto tipos...");
+        
+        for(Declaracion nuev: dec){
+            //System.out.println("| "+nuev.getNombreVariable()+" | "+nuev.getTipoVariable()+" | "+nuev.getValorVariable());
+            if(nuev.getValorVariable() != null && nuev.getTipoVariable()!=null){
+                System.out.println("validar--" + nuev.getNombreVariable());
+            } 
+        }
+    }
+    
+    public void validarParentesis(){
+        int parentecisAbierto = 0;
+        int parentecisCerrado = 0;
+        for(Declaracion nuev: dec){
+                
+            if(nuev.getTipoVariable()==null){
+                
+                for(char i : nuev.getValorVariable().toCharArray()){
+                    if(i == '('){
+                        parentecisAbierto++;
+                    }else if( i == ')'){
+                        parentecisCerrado++;
+                    }
+                }
+            }
+            if(parentecisAbierto < parentecisCerrado){
+               throw new IllegalArgumentException("Error en: "+ nuev.getNombreVariable()+" <<- falta Apertura de Parentesis");
+            }else if (parentecisCerrado < parentecisAbierto){
+                throw new IllegalArgumentException("Error en Formula: "+ nuev.getNombreVariable()+" falta Cierre de Parentesis");
+            }
+        }
+        
     }
 }
