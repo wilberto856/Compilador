@@ -13,6 +13,7 @@ public class Compilador {
         try {
             control.obtenerDatos(file);
             control.declaraciones();
+            control.validarParentesis();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
