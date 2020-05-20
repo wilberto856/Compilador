@@ -28,12 +28,12 @@ public class LeerArchivo {
                         lineas.add(linea);
                     }
                 }else{
-                    System.out.println("Error en: "+st+" <<: sentencia no finaliza con ';'");
-                    break;
+                    //System.out.println("Error en: "+st+" <<: sentencia no finaliza con ';'");
+                    throw new IllegalArgumentException("Error en: "+st+" <<: sentencia no finaliza con ';'");
                 }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(LeerArchivo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
   
         finally{
             br.close();
